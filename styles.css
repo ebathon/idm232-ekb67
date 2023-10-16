@@ -1,0 +1,65 @@
+nav {
+    display:flex;
+    justify-content: space-between;
+    text-align: center;
+    padding: 0rem 1rem;
+    background-color:#4056A1;
+}
+nav ul{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    list-style: none;
+    margin: 0 10px;
+}
+nav li {
+    padding-top: 1rem;
+    padding-left: 1rem;
+  }
+
+  
+/* Style the search box inside the navigation bar */
+nav input[type=text] {
+    float: right;
+    padding: 6px;
+    border: none;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+  }
+h1{
+    font-family: 'Ingrid Darling';font-size: 50px;
+    font-weight: 200;
+    color: aliceblue;
+}
+nav img{
+    max-width: 40%;
+}
+.search{
+max-width: 60% ;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width: 600px; /* You can adjust the width as needed */
+    margin: 0 auto;
+}
+
+.recepie {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+img {
+    max-width: 30%;
+    height: auto;
+}
+
+p {
+    margin: 5px 0;
+}
