@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Ingrid Darling' rel='stylesheet'>
+    <link href="https://fonts.cdnfonts.com/css/palatino" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+
+<header class="header">
+    <div class="logo">
+        <a href="index.html"><div id="logo-left">
+            <h1>Cooking Well Done</h1>
+            <p> A Recepie Database for All</p>
+        </div></a>
+        <div id="logo-right">
+            <img class="icon" src="images/—Pngtree—pressure cooker kitchenware soup pot_3946392.png">
+        </div>
+    </div>
+    <div class="search-container">
+        <input class="search-input" type="text" placeholder="Search...">
+        <button class="search-button">Search</button>
+    </div>
+</header>
+
+<body>
+
+<?php
+  // $msg = "HOWDY";
+//   echo '<script type="text/javascript">console.log("'. $msg .'");</script>';
+
+  require_once './includes/fun.php';
+  consoleMsg("PHP to JS .. is Wicked FUN");
+
+  // Include env.php that holds global vars with secret info
+  require_once './env.php';
+
+  // Include the database connection code
+  require_once './includes/database.php';
+  consoleMsg("unique spelling of recipe page works - fr now");
+?>
+    <a href=index.php><button> <i class="fas fa-arrow-left"></i> Back to recepies</button></a>
+    <div class="hero-container">
+        <div class="container-left">
+<?php
+
+
+if (isset($_GET['id'])) {
+    // Get the ID from the URL
+    $id = intval($_GET['id']);
+    consoleMsg("line 59");
+    // Query the database for the specific recipe with the given ID
+    $query = "SELECT * FROM recipes WHERE id = $id";
+    $result = mysqli_query($db_connection, $query);
+    consoleMsg("line 63");
+
+    // Check if the query was successful
+    if ($result === false) {
+        die("Error in SQL query: " . mysqli_error($db_connection));
+    }
+
+    // Check if a recipe was found
+    if ($result->num_rows > 0) {
+        $oneRecipe = mysqli_fetch_array($result);
+        echo '<img src="images/' . $oneRecipe['Main IMG'] . '" alt="hero-image">';
+    } else {
+        echo 'Recipe not found.';
+    }};
+?>
+        <!-- <img src="images/0101_FPP_Chicken-Rice_97338_WEB_SQ_hi_res.jpg" alt="hero-image"> -->
+        </div>
+
+ <?php
+                echo '<div class= "hero-description">';
+                echo '<h2>' . $oneRecipe['Title']. '</h2>';
+                echo '<h3>' . $oneRecipe['Subtitle']. '</h3>';
+                echo '<h3>' . $oneRecipe['Cook Time']. '</h3>';
+                echo '<h3>' . $oneRecipe['Servings'] . ' Servings </h3>';
+                echo '<p>' . $oneRecipe['Description'] . '</p>';
+                echo '</div>';
+      ?>      
+       <!-- <div class="hero-description"> -->
+            <!-- <h2>Ancho-Orange Chicken</h2> -->
+            <!-- <h3>with Kale Rice and Roasted Carrots</h3>
+            <h3>45 Minutes</h3> -->
+            <!-- <h3>4 Servings</h3> -->
+            <!-- <p>We're amping up chicken breasts with a glaze of smoky ancho chile paste
+            and fresh orange juice in this recipe. On the side, roasted carrots and
+            lightly creamy, golden raisin-studded rice perfectly accent the
+            sweetness of the glaze.</p> -->
+        <!-- </div> -->
+
+        <div class="ingredients">
+        <ul><h2>Ingredients</h2>
+        <?php
+        // $query = "SELECT * FROM recipes";
+        // $results = mysqli_query($db_connection, $query);
+
+        $theRealzIngredients = $oneRecipe["All Ingredients"];
+        $ingredientsItems = explode("*", $theRealzIngredients);
+        if (!empty($ingredientsItems)) {
+            foreach ($ingredientsItems as $ingreItem) {
+            echo '<li>' . $ingreItem . '</li>'; 
+        } } else {
+          consoleMsg("Gots no ingredients for ye");
+        }
+        ?>
+        </ul>
+            <!-- <li>4 Boneless, Skinless Chicken Breasts</li>
+            <li>1 Lime</li>
+            <li>1 Tbsp Ancho Chili Paste</li>
+            <li>1 Bunch Kale</li>
+            <li>2 Tbsps Butter</li>
+            <li>3/4 Cup Jasmine Rice</li>
+            <li>2 Cloves Garlic</li>
+            <li>2 Tbsps Crème Fraîche</li>
+            <li>4 Carrots</li>
+            <li>3 Tbsps Golden Raisins</li>
+            <li>1 Orange</li>  -->
+        </div>
+    
+        <div class="ingredients-img">
+
+        <?php
+
+        echo '<img src="images/ingredients/' . $oneRecipe['Ingredients IMG'] . '" alt="hero-image">';
+        ?>
+            <!-- <img src="images/ingredients-img.png" alt="imgredients-image"> -->
+        </div>
+        <h2>Instructions</h2>
+    </div>
+
+<div class="Instructions-container">
+    <div class="step">
+        <img src="images/Step1.jpg" alt="Cook the rice">
+        <h2>1. Cook the rice:</h2>
+            <p>Place an oven rack in the center of the oven, 
+            then preheat to 450°F. In a medium pot, combine 
+            the rice, a big pinch of salt, and 1 1/2 cups of water.
+            Heat to boiling on high. Once boiling, cover and
+            reduce the heat to low. Cook 12 to 14 minutes, or
+            until the water has been absorbed and the rice is tender.
+            Turn off the heat and fluff with a fork. Cover to keep warm.
+        </p>
+    </div>
+    <div class="step">
+        <img src="images/step-2.jpg" alt="Prepare the ingredients">
+            <h2>2. Prepare the ingredients & make the glaze:</h2>
+            <p>While the rice cooks, wash and dry the fresh produce.
+                Peel the carrots; quarter lengthwise, then halve crosswise.
+                Peel and roughly chop the garlic. Remove and discard the stems
+                of the kale; finely chop the leaves. Using a peeler, remove
+                the lime rind, avoiding the white pith; mince to get 2 teaspoons
+                of zest (or use a zester). Halve the lime crosswise. Halve
+                the orange; squeeze the juice into a bowl, straining out any
+                seeds. Whisk in the chile paste and 2 tablespoons of water until
+                smooth.
+            </p>
+    </div>
+    <div class="step">
+        <img src="images/Step-3.jpg" alt="Roast the carrots">
+            <h2>3. Roast the carrots:</h2>
+            <p>Place the sliced carrots on a sheet pan. Drizzle with
+                olive oil and season with salt and pepper; toss to coat.
+                Arrange in an even layer. Roast 15 to 17 minutes, or
+                until tender when pierced with a fork. Remove from the oven.
+            </p>
+    </div>
+    <div class="step">
+        <img src="images/Step-4.jpg" alt="Cook the kale">
+            <h2>4. Cook the kale:</h2>
+            <p>While the carrots roast, in a large pan
+                (nonstick, if you have one), heat 2 teaspoons of olive
+                oil on medium-high until hot. Add the chopped garlic
+                and cook, stirring constantly, 30 seconds to 1 minute, or
+                until fragrant. Add the chopped kale; season with salt
+                and pepper. Cook, stirring occasionally, 3 to 4 minutes,
+                or until slightly wilted. Add 1/3 cup of water; season
+                with salt and pepper. Cook, stirring occasionally, 3 to
+                4 minutes, or until the kale has wilted and the water has
+                cooked off. Transfer to the pot of cooked rice. Stir to
+                combine; season with salt and pepper to taste. Cover to
+                keep warm. Wipe out the pan.
+            </p>
+    </div>
+    <div class="step">
+        <img src="images/step-5.jpg" alt="Cook and glaze the chicken">
+            <h2>5. Cook and glaze the chicken:</h2>
+            <p>While the carrots continue to roast, pat the chicken dry
+                with paper towels; season with salt and pepper on both
+                sides. In the same pan, heat 2 teaspoons of olive oil on
+                medium-high until hot. Add the seasoned chicken and cook 4
+                to 6 minutes on the first side, or until browned. Flip and
+                cook 2 to 3 minutes, or until lightly browned. Add the glaze
+                and cook, frequently spooning the glaze over the chicken, 2 to 3 minutes,
+                or until the chicken is coated and cooked through. Turn off the heat;
+                stir the butter and the juice of 1 lime half into the glaze until
+                the butter has melted. Season with salt and pepper to taste.
+            </p>
+    </div>
+    <div class="step">
+        <img src="images/step-6.jpg" alt="Finish the rice">
+            <h2>6. Finish the rice and serve your dish:</h2>
+            <p>To the pot of cooked rice and kale, add the lime zest,
+                crème fraîche, raisins, and the juice of the remaining
+                lime half. Stir to combine; season with salt and pepper
+                to taste. Serve the glazed chicken with the finished rice and
+                roasted carrots. Top the chicken with the remaining glaze from
+                the pan. Enjoy!
+            </p>
+    </div>
+
+
+</div>
+
+
+</div>
+
+</body>
+<footer>
+    <div class="footer-content">
+        <h1>Cooking Well Done</h1>
+        <p>A Recepie Database for All</p>
+    </div>
+    <div class="footer-bottom">
+        <p>copyright &copy;2023 <a href="#">CookingWellDone</p>
+    </div>
+</footer>
+
+</html>

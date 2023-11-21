@@ -8,7 +8,9 @@
 /*header*/
 
    /* Styles for the header and search bar */
-  
+   .blacktext {
+    color: black;
+   }
    
    .header {
     background-color: #4056A1;

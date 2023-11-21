@@ -51,7 +51,8 @@
 <?php
 if (isset($_GET['id'])) {
     // Get the ID from the URL
-    $id = intval($_GET['id']);
+    // $id = intval($_GET['id']);
+    $id = 14;
     consoleMsg("line 59");
     // Query the database for the specific recipe with the given ID
     $query = "SELECT * FROM recipes WHERE id = $id";
@@ -135,7 +136,7 @@ if (isset($_GET['id'])) {
     </div>
 
 <div class="Instructions-container">
-    <div class="step">
+    <!-- <div class="step">
         <img src="images/Step1.jpg" alt="Cook the rice">
         <h2>1. Cook the rice:</h2>
             <p>Place an oven rack in the center of the oven, 
@@ -146,8 +147,67 @@ if (isset($_GET['id'])) {
             until the water has been absorbed and the rice is tender.
             Turn off the heat and fluff with a fork. Cover to keep warm.
         </p>
-    </div>
-    <div class="step">
+    </div> -->
+
+    <?php
+                // echo '<div class = "Instructions-container">';
+                // echo '<div class = "step">';
+                // echo '<img src = "/images/Steps/' . $oneRecipe['Step IMGs']. '" alt = step-image">';
+                // // echo '<h2>' . $oneRecipe['Subtitle']. '</h2>';
+                // echo '<p>' . $oneRecipe['All Steps']. '</p>';
+                // echo '</div>';
+
+            //     $query = "SELECT * FROM Recipes WHERE id = $recipe_id ";
+            //     $results = mysqli_query($db_connection, $query);
+            //     while ($oneRecipe = mysqli_fetch_array($results)) {
+     
+    
+            // function keyExists($oneRecipe, $key) {
+            //     return isset($oneRecipe[$key]) && !empty($oneRecipe[$key]);
+            //   };
+            // if (keyExists($oneRecipe, 'All Ingredients')) {
+            //     $ingredientsArray = explode('*', $oneRecipe['All Ingredients']);
+            
+  ?>
+  
+  <?php
+  consoleMsg("line 173");
+  $stepTextArray = explode("*", $oneRecipe['All Steps']);
+//   echo '<p class="blacktext"> wahr </p>';
+
+//   echo '<p> Number of Step Text: ' . count($stepTextArray) . '</p>';
+  consoleMsg("line 175");
+  $stepImagesArray = explode("*", $oneRecipe['Step IMGs']);
+//   echo '<p> Number of Step Images: ' . count($stepImagesArray) . '</p>';   
+  consoleMsg("line 178");
+  
+  echo '<div class="Instructions-container">';
+  consoleMsg("line 181");
+  
+  // Check if the arrays have the same number of elements
+//   if (count($stepTextArray) === count($stepImagesArray)) {
+      for ($lp = 0; $lp < count($stepTextArray); $lp++) {
+          consoleMsg("line 183");
+          // If step starts with a number, get number minus one for image name
+          $firstChar = substr($stepTextArray[$lp], 0, 1);
+          if (is_numeric($firstChar)) {
+              echo ' <div class="step">';
+              echo '<img src="./images/steps/' . $stepImagesArray[$firstChar - 1] . '" alt="Step Image">';
+              echo '<h2>' . $stepTextArray[$lp] . '</h2>';
+              echo '<p>' . $stepTextArray[$lp+1] . '</p>';
+              echo ' </div>';
+          }
+         
+      }
+//   } else {
+//       consoleMsg("QUERY ERROR");
+//   }
+  
+    //    echo '</div>';
+?>
+
+
+    <!-- <div class="step">
         <img src="images/step-2.jpg" alt="Prepare the ingredients">
             <h2>2. Prepare the ingredients & make the glaze:</h2>
             <p>While the rice cooks, wash and dry the fresh produce.
@@ -212,13 +272,12 @@ if (isset($_GET['id'])) {
                 roasted carrots. Top the chicken with the remaining glaze from
                 the pan. Enjoy!
             </p>
-    </div>
+    </div> -->
 
-
+<!-- </div>-->
+</div> 
 </div>
 
-
-</div>
 
 </body>
 <footer>
